@@ -28,6 +28,8 @@ namespace JobHunt
             // https://learn.microsoft.com/en-us/dotnet/core/extensions/configuration-providers#memory-configuration-provider
             // https://stackoverflow.com/questions/70475830/how-to-use-dependency-injection-in-winforms
 
+            string databaseFileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "jobs.db");
+
             var builder = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
             // load in the json file as configuration
@@ -39,7 +41,7 @@ namespace JobHunt
             .AddInMemoryCollection(
                 new Dictionary<string, string?>
                 {
-                    ["LiteDB:ConnectionString"] = Path.GetDirectoryName(Application.ExecutablePath).Replace(@"bin\debug\", string.Empty)+"\\jobs.db",
+                    ["LiteDB:ConnectionString"] = databaseFileName,
                     ["Logging:LogLevel:Default"] = "Warning"
                 })
             ;
